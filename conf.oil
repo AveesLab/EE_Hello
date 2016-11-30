@@ -1,0 +1,66 @@
+CPU mySystem {
+
+	OS myOs {
+
+		EE_OPT = "DEBUG";
+
+		CPU_DATA = AVR8 {
+			APP_SRC = "code.cpp";
+			APP_SRC = "serial.cpp";
+			APP_SRC = "task.c";
+			MULTI_STACK = FALSE;
+		};
+
+		MCU_DATA = MEGA {
+			MODEL = MEGA_328p;
+		};
+
+		EE_OPT = "__ARDUINO_SDK__";
+		EE_OPT = "__ARDUINO_SDK_CC__";
+		EE_OPT = "__ARDUINO_SDK_CC_1_6_8__";
+		EE_OPT = "__ARDUINO_SDK_LIB_TIMER1__";
+		EE_OPT = "__ARDUINO_UNO_328__";
+		/* Used to build separate libarduino.a */
+		EE_OPT = "__ADD_LIBS__";
+		LIB = ENABLE {
+			NAME = "ARDUINO_SDK";
+		};
+		KERNEL_TYPE = ECC2;
+
+	};
+	
+	APPMODE appmode1 {};
+
+	TASK TaskL1 {
+		PRIORITY = 1;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+	};
+
+	ISR timer1_handler {
+		CATEGORY = 2;
+		ENTRY = "TIMER1_OVF";	/* TODO: Set correct ENTRY name. */
+		/* PRIORITY = LOW; */	/* FIXED HARDWARE PRIORITY */
+	};
+		
+	COUNTER counter1 {
+ 		MINCYCLE = 1;
+		MAXALLOWEDVALUE = 127;
+		TICKSPERBASE = 1;
+	};
+	
+	ALARM alarm1 {
+		COUNTER = counter1;
+		ACTION = ACTIVATETASK
+		{
+			TASK = TaskL1;
+		};
+ 		AUTOSTART = TRUE {
+			ALARMTIME = 10;
+			CYCLETIME = 10;
+			APPMODE = appmode1;
+		};
+	};
+};
