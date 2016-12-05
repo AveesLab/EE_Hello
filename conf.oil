@@ -20,6 +20,7 @@ CPU mySystem {
 		EE_OPT = "__ARDUINO_SDK_CC_1_6_8__";
 		EE_OPT = "__ARDUINO_SDK_LIB_TIMER1__";
 		EE_OPT = "__ARDUINO_UNO_328__";
+		/* EE_OPT = "__RTD_LINUX__"; */	/* Uncomment for Mac OS */
 		/* Used to build separate libarduino.a */
 		EE_OPT = "__ADD_LIBS__";
 		LIB = ENABLE {
