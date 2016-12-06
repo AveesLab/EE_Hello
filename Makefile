@@ -1,4 +1,5 @@
-EE_DIR=C:/eclipse
+EE_DIR=C:\eclipse
+GENERATOR=$(EE_DIR)\evidence\generate_code.bat
 BUILD_DIR=Debug
 CONF_FILE=$(AVR_TOOLS)/etc/avrdude.conf
 COM_DEVICE=COM3
@@ -12,7 +13,7 @@ build:
 	cd $(BUILD_DIR); make
 
 config: conf.oil
-	generate_code.sh $(EE_DIR) conf.oil $(BUILD_DIR)
+	$(GENERATOR) $(EE_DIR) conf.oil $(BUILD_DIR)
 
 clean:
 	cd $(BUILD_DIR); make clean
