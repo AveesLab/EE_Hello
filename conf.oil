@@ -40,6 +40,14 @@ CPU mySystem {
 		ACTIVATION = 1;
 	};
 
+	TASK TaskL2 {
+		PRIORITY = 2;
+		STACK = SHARED;
+		SCHEDULE = FULL;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+	};
+
 	ISR timer1_handler {
 		CATEGORY = 2;
 		ENTRY = "TIMER1_OVF";	/* TODO: Set correct ENTRY name. */
@@ -61,6 +69,19 @@ CPU mySystem {
  		AUTOSTART = TRUE {
 			ALARMTIME = 10;
 			CYCLETIME = 10;
+			APPMODE = appmode1;
+		};
+	};
+
+	ALARM alarm2 {
+		COUNTER = counter1;
+		ACTION = ACTIVATETASK
+		{
+			TASK = TaskL2;
+		};
+ 		AUTOSTART = TRUE {
+			ALARMTIME = 10;
+			CYCLETIME = 5;
 			APPMODE = appmode1;
 		};
 	};

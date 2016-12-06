@@ -1,22 +1,15 @@
 #include "Arduino.h"
 #include "serial.h"
+#include <stdarg.h>
 
-void printSerial(const char *str)
-{
-	Serial.println(str);
-}
+#define LEN_BUF 128
 
-void printInteger(int num)
+void printfSerial(const char *fmt, ... )
 {
-	Serial.println(num);
-}
-
-void printByte(char re)
-{
-	Serial.println((byte) re);
-}
-
-void printFloat(float f)
-{
-	Serial.println(f);
+    char buf[LEN_BUF];
+    va_list args;
+    va_start (args, fmt );
+    vsnprintf(buf, LEN_BUF, fmt, args);
+    va_end (args);
+    Serial.print(buf);
 }
