@@ -1,8 +1,18 @@
+EE_DIR=C:/eclipse
+BUILD_DIR=Debug
+CONF_FILE=$(AVR_TOOLS)/etc/avrdude.conf
+COM_DEVICE=COM3
+BAUDRATE=115200
+HEX_FILE=$(BUILD_DIR)/arduino.hex
+
 flash: build
-	avrdude -C"$(AVR_TOOLS)/etc/avrdude.conf" -v -patmega328p -carduino -PCOM3 -b115200 -D -Uflash:w:Debug/arduino.hex:i
+	avrdude -C"$(CONF_FILE)" -v -patmega328p -carduino -P$(COM_DEVICE) -b$(BAUDRATE) -D -Uflash:w:$(HEX_FILE):i
 	
 build:
-	cd Debug; make
-	
+	cd $(BUILD_DIR); make
+
+config: conf.oil
+	generate_code.sh $(EE_DIR) conf.oil $(BUILD_DIR)
+
 clean:
-	cd Debug; make clean
+	cd $(BUILD_DIR); make clean
